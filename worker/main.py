@@ -1,11 +1,12 @@
 import asyncio
+import os
 import random
 import pika
 import json
 
 from pyzeebe import ZeebeWorker, Job, create_insecure_channel
 
-channel = create_insecure_channel(hostname="localhost", port=26500)  # Create grpc channel
+channel = create_insecure_channel(hostname=os.environ["ZEEBE_HOST"], port=26500)  # Create grpc channel
 worker = ZeebeWorker(channel)  # Create a zeebe worker
 
 _username = 'guest'
@@ -56,7 +57,7 @@ async def run_game_task(task_id: str, weapon: str):
 
 def send_to_rabbit(msg):
     connection = pika.BlockingConnection(
-        pika.ConnectionParameters('localhost', credentials=pika.PlainCredentials(_username, _amqp_password)))
+        pika.ConnectionParameters(os.environ["RABBIT_HOST"], credentials=pika.PlainCredentials(_username, _amqp_password)))
     channel_rabbit = connection.channel()
     channel_rabbit.queue_declare(queue='game_rock')
 

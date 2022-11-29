@@ -4,6 +4,7 @@ import logging
 from client4game1 import zeebe_client
 from flask import Flask, abort, jsonify
 from flask import request
+from gevent.pywsgi import WSGIServer
 
 loop = asyncio.get_event_loop()
 app = Flask(__name__)
@@ -37,7 +38,9 @@ async def main():
 
 if __name__ == '__main__':
     loop.run_until_complete(main())
-    app.run()
+    # app.run(host="0.0.0.0", port=8080)
+    http_server = WSGIServer(('', 5000), app)
+    http_server.serve_forever()
 
 # # Cancel a running process
 # await zeebe_client.cancel_process_instance(process_instance_key=12345)

@@ -162,6 +162,37 @@ services:
     networks:
       - flowing
 
+  zeebe-game-rock-client:
+    image: snaiperlfc/zeebe-game-rock-client:latest
+    container_name: game_client
+    ports:
+      - "5000:5000"
+    restart: on-failure
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:5000" ]
+      interval: 30s
+      timeout: 15s
+      retries: 5
+    environment:
+      ZEEBE_HOST: zeebe
+    networks:
+      - flowing
+    depends_on:
+      - zeebe
+
+  zeebe-game-rock-worker:
+    image: snaiperlfc/zeebe-game-rock-worker:latest
+    container_name: game_worker
+    restart: on-failure
+    environment:
+      ZEEBE_HOST: zeebe
+      RABBIT_HOST: rabbitmq
+    networks:
+      - flowing
+    depends_on:
+      - zeebe
+      - rabbitmq
+
 volumes:
   zeebe:
   elastic:
