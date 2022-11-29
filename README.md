@@ -32,6 +32,15 @@ Keycloak is used to manage users. Here you can log in with the user `admin` and 
 
 The workflow engine Zeebe is available using gRPC at `localhost:26500`.
 
+
+Example of task:
+```
+curl -L -X POST 'localhost:5000/api/v1/tasks' -H 'Content-Type: application/json' --data-raw '{
+    "weapon": "камень",
+    "task_id": "123"
+}'
+```
+
 To tear down the whole environment run the following command
 
 ```

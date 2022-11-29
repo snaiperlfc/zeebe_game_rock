@@ -7,7 +7,7 @@ services:
     container_name: rabbitmq
     restart: always
     volumes:
-      - ./rabbitmq-data:/var/lib/rabbitmq
+      - rabbitmq-data:/var/lib/rabbitmq
     environment:
       RABBITMQ_DEFAULT_USER: guest
       RABBITMQ_DEFAULT_PASS: guest
@@ -70,7 +70,7 @@ services:
     container_name: keycloak
     image: bitnami/keycloak:latest
     volumes:
-      - ./keycloak-theme:/opt/bitnami/keycloak/themes/identity
+      - keycloak-theme:/opt/bitnami/keycloak/themes/identity
     ports:
       - "18080:8080"
     environment:
@@ -110,7 +110,7 @@ services:
       KEYCLOAK_USERS_0_ROLES_1: "Operate"
     restart: on-failure
     volumes:
-      - ./keycloak-theme:/app/keycloak-theme
+      - keycloak-theme:/app/keycloak-theme
     networks:
       - identity-network
     depends_on:
@@ -194,11 +194,11 @@ services:
       - rabbitmq
 
 volumes:
+  rabbitmq-data:
   zeebe:
   elastic:
   postgres:
   keycloak-theme:
-  kibana:
 
 networks:
   identity-network:
