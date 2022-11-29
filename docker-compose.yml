@@ -10,7 +10,7 @@ services:
       - rabbitmq-data:/var/lib/rabbitmq
     environment:
       RABBITMQ_DEFAULT_USER: guest
-      RABBITMQ_DEFAULT_PASS: guest
+      RABBITMQ_DEFAULT_PASS: 9CLGnukJ
     ports:
       - "5672:5672"
       - "15672:15672"
@@ -33,7 +33,7 @@ services:
       - "JAVA_TOOL_OPTIONS=-Xms512m -Xmx512m"
     restart: always
     volumes:
-      - zeebe:/usr/local/zeebe/data
+      - ./zeebe:/usr/local/zeebe/data
     networks:
       - flowing
     depends_on:
@@ -69,8 +69,6 @@ services:
   keycloak: # https://hub.docker.com/r/jboss/keycloak
     container_name: keycloak
     image: bitnami/keycloak:latest
-    volumes:
-      - keycloak-theme:/opt/bitnami/keycloak/themes/identity
     ports:
       - "18080:8080"
     environment:
@@ -78,7 +76,7 @@ services:
       KEYCLOAK_DATABASE_HOST: postgres
       KEYCLOAK_DATABASE_PASSWORD: "#3]O?4RGj)DE7Z!9SA5"
       KEYCLOAK_ADMIN_USER: admin
-      KEYCLOAK_ADMIN_PASSWORD: admin
+      KEYCLOAK_ADMIN_PASSWORD: 9CLGnukJ
     restart: on-failure
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8080/auth" ]
@@ -109,8 +107,6 @@ services:
       KEYCLOAK_USERS_0_ROLES_0: "Identity"
       KEYCLOAK_USERS_0_ROLES_1: "Operate"
     restart: on-failure
-    volumes:
-      - keycloak-theme:/app/keycloak-theme
     networks:
       - identity-network
     depends_on:
@@ -130,7 +126,7 @@ services:
       timeout: 5s
       retries: 5
     volumes:
-      - postgres:/var/lib/postgresql/data
+      - ./postgres:/var/lib/postgresql/data
     networks:
       - identity-network
 
@@ -158,7 +154,7 @@ services:
       timeout: 5s
       retries: 3
     volumes:
-      - elastic:/usr/share/elasticsearch/data
+      - ./elastic:/usr/share/elasticsearch/data
     networks:
       - flowing
 
@@ -187,6 +183,17 @@ services:
     environment:
       ZEEBE_HOST: zeebe
       RABBIT_HOST: rabbitmq
+      RABBIT_PASSWORD: "9CLGnukJ"
+    networks:
+      - flowing
+    depends_on:
+      - zeebe
+      - rabbitmq
+
+  game-rock-bot:
+    image: snaiperlfc/game-rock-bot:latest
+    container_name: game-rock-bot
+    restart: on-failure
     networks:
       - flowing
     depends_on:

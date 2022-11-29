@@ -10,7 +10,7 @@ channel = create_insecure_channel(hostname=os.environ["ZEEBE_HOST"], port=26500)
 worker = ZeebeWorker(channel)  # Create a zeebe worker
 
 _username = 'guest'
-_amqp_password = 'guest'
+_amqp_password = os.environ["RABBIT_PASSWORD"]
 
 
 async def on_error(exception: Exception, job: Job):
@@ -57,7 +57,8 @@ async def run_game_task(task_id: str, weapon: str):
 
 def send_to_rabbit(msg):
     connection = pika.BlockingConnection(
-        pika.ConnectionParameters(os.environ["RABBIT_HOST"], credentials=pika.PlainCredentials(_username, _amqp_password)))
+        pika.ConnectionParameters(os.environ["RABBIT_HOST"],
+                                  credentials=pika.PlainCredentials(_username, _amqp_password)))
     channel_rabbit = connection.channel()
     channel_rabbit.queue_declare(queue='game_rock')
 
