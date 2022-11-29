@@ -5,3 +5,4 @@
 /.idea/vcs.xml
 /.idea/.gitignore
 /.idea/zeebe_game_rock.iml
+/rabbitmq-data/
