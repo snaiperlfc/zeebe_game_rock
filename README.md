@@ -6,7 +6,7 @@
 
 > :information_source: The Docker required is 20.10.16+
 
-To stand-up a complete Camunda Platform 8 Self-Managed environment locally the [docker-compose.yaml](docker-compose.yaml) file in this repository can be used.
+To stand-up a complete Camunda Platform 8 Self-Managed environment locally the [docker-compose.yaml](docker-compose.yml) file in this repository can be used.
 
 The full environment contains these components:
 - Zeebe
