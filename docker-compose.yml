@@ -197,8 +197,27 @@ services:
     networks:
       - flowing
     depends_on:
+      - postgres-bot
       - zeebe
       - rabbitmq
+
+  postgres-bot: # https://hub.docker.com/_/postgres
+    container_name: postgres-bot
+    image: postgres:14.5-alpine
+    environment:
+      POSTGRES_DB: game_rock
+      POSTGRES_USER: game_rock_usr
+      POSTGRES_PASSWORD: "D1XW1bkuW1S2erRz"
+    restart: on-failure
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - ./postgres-bot:/var/lib/postgresql/data
+    networks:
+      - flowing
 
 volumes:
   rabbitmq-data:
