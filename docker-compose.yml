@@ -10,7 +10,7 @@ services:
       - rabbitmq-data:/var/lib/rabbitmq
     environment:
       RABBITMQ_DEFAULT_USER: guest
-      RABBITMQ_DEFAULT_PASS: 9CLGnukJ
+      RABBITMQ_DEFAULT_PASS: guest
     ports:
       - "5672:5672"
       - "15672:15672"
@@ -76,7 +76,7 @@ services:
       KEYCLOAK_DATABASE_HOST: postgres
       KEYCLOAK_DATABASE_PASSWORD: "#3]O?4RGj)DE7Z!9SA5"
       KEYCLOAK_ADMIN_USER: admin
-      KEYCLOAK_ADMIN_PASSWORD: 9CLGnukJ
+      KEYCLOAK_ADMIN_PASSWORD: admin
     restart: on-failure
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8080/auth" ]
@@ -183,7 +183,7 @@ services:
     environment:
       ZEEBE_HOST: zeebe
       RABBIT_HOST: rabbitmq
-      RABBIT_PASSWORD: "9CLGnukJ"
+      RABBIT_PASSWORD: "guest"
     networks:
       - flowing
     depends_on:
