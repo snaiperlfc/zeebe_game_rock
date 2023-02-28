@@ -68,7 +68,7 @@ services:
 
   keycloak: # https://hub.docker.com/r/jboss/keycloak
     container_name: keycloak
-    image: bitnami/keycloak:latest
+    image: bitnami/keycloak:19.0.3
     ports:
       - "18080:8080"
     environment:
